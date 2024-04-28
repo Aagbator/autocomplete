@@ -1,6 +1,11 @@
 import React from "react";
 
-const AutoComplete = () => {
+type AutoCompleteProps = {
+  items: string[];
+  onChangeText: (value: string) => void;
+};
+
+const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
   return <div>AutoComplete</div>;
 };
 
