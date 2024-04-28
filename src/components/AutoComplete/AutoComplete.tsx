@@ -22,6 +22,13 @@ const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
         type="text"
         onChange={handleOnChange}
       />
+      <div className="autocomplete-result">
+        <ul role="listbox">
+          {items.map((item, index) => (
+            <li key={index}>{item} </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
