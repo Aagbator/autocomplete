@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import AutoComplete from "./components/AutoComplete/AutoComplete";
 import { getCountries } from "./mockApi/countries-api";
+import { useDebounceValue } from "./hooks/useDebounceValue";
 
 function App() {
   const [countries, setCountries] = useState<string[]>([]);
   const [filterText, setFilterText] = useState<string>("");
 
+  const debouncedFilterText = useDebounceValue(filterText);
+
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const data = await getCountries(filterText);
-        console.log(data);
+        const data = await getCountries(debouncedFilterText);
         setCountries(data);
       } catch (error) {
         console.log(error);
@@ -19,7 +21,7 @@ function App() {
     };
 
     fetchCountries();
-  }, [filterText]);
+  }, [debouncedFilterText]);
 
   const onChangeTextHandler = (text: string) => {
     setFilterText(text);
