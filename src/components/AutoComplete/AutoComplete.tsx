@@ -8,6 +8,11 @@ type AutoCompleteProps = {
 const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
   const [inputValue, setInputValue] = useState("");
 
+  const itemsWithIds: { id: string; item: string }[] = items.map((item) => ({
+    id: crypto.randomUUID(),
+    item,
+  }));
+
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trim();
     setInputValue(value);
@@ -24,8 +29,8 @@ const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
       />
       <div className="autocomplete-result">
         <ul role="listbox">
-          {items.map((item, index) => (
-            <li key={index}>{item} </li>
+          {itemsWithIds.map(({ item, id }) => (
+            <li key={id}>{item} </li>
           ))}
         </ul>
       </div>
