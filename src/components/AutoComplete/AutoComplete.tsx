@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 
 type AutoCompleteProps = {
   items: string[];
@@ -6,7 +6,24 @@ type AutoCompleteProps = {
 };
 
 const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
-  return <div>AutoComplete</div>;
+  const [inputValue, setInputValue] = useState("");
+
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.trim();
+    setInputValue(value);
+    onChangeText(value);
+  };
+
+  return (
+    <div className="autocomplete-container">
+      <input
+        placeholder="Start typing..."
+        autoComplete="false"
+        type="text"
+        onChange={handleOnChange}
+      />
+    </div>
+  );
 };
 
 export default AutoComplete;
