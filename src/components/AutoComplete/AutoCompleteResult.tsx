@@ -49,13 +49,18 @@ const AutoCompleteResult = ({ items, keyword }: AutoCompleteResultProps) => {
     return parts;
   };
 
+  const hasResults = items.length > 0;
+
   return (
     <div className="autocomplete-result">
-      <ul role="listbox">
-        {items.map(({ name, id }, _) => (
-          <li key={id}>{highlightKeyword(name, keyword)}</li>
-        ))}
-      </ul>
+      {!hasResults && <span>No results</span>}
+      {hasResults && (
+        <ul role="listbox">
+          {items.map(({ name, id }, _) => (
+            <li key={id}>{highlightKeyword(name, keyword)}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
