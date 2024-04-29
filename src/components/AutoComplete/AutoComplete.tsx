@@ -1,4 +1,5 @@
 import React, { ChangeEvent, ReactNode, useState } from "react";
+import "../AutoComplete/AutoComplete.css";
 
 type AutoCompleteProps = {
   items: string[];
@@ -72,8 +73,8 @@ const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
       />
       <div className="autocomplete-result">
         <ul role="listbox">
-          {items.map((item, index) => (
-            <li key={index}>{highlightKeyword(item, inputValue)}</li>
+          {itemsWithIds.map(({ item, id }, index) => (
+            <li key={id}>{highlightKeyword(item, inputValue)}</li>
           ))}
         </ul>
       </div>
