@@ -50,4 +50,4 @@ const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
   );
 };
 
-export default AutoComplete;
+export default React.memo(AutoComplete);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import AutoComplete from "./components/AutoComplete/AutoComplete";
 import { getCountries } from "./mockApi/countries-api";
@@ -23,9 +23,9 @@ function App() {
     fetchCountries();
   }, [debouncedFilterText]);
 
-  const onChangeTextHandler = (text: string) => {
+  const onChangeTextHandler = useCallback((text: string) => {
     setFilterText(text);
-  };
+  }, []);
 
   return (
     <div className="app">
