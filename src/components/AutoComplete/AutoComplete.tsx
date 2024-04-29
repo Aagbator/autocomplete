@@ -9,6 +9,7 @@ type AutoCompleteProps = {
 
 const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
   const [inputValue, setInputValue] = useState("");
+  const [isResultVisible, setIsResultVisible] = useState(false);
 
   const itemsWithIds: { id: string; name: string }[] = items.map((item) => ({
     id: crypto.randomUUID(),
@@ -21,6 +22,14 @@ const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
     onChangeText(value);
   };
 
+  const handleOnFocus = () => {
+    setIsResultVisible(true);
+  };
+
+  const handleOnBlur = () => {
+    setIsResultVisible(false);
+  };
+
   return (
     <div className="autocomplete-container">
       <input
@@ -28,11 +37,15 @@ const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
         autoComplete="false"
         type="text"
         onChange={handleOnChange}
+        onFocus={handleOnFocus}
+        onBlur={handleOnBlur}
       />
-      <AutoCompleteResult
-        items={itemsWithIds}
-        keyword={inputValue}
-      ></AutoCompleteResult>
+      {isResultVisible && (
+        <AutoCompleteResult
+          items={itemsWithIds}
+          keyword={inputValue}
+        ></AutoCompleteResult>
+      )}
     </div>
   );
 };
