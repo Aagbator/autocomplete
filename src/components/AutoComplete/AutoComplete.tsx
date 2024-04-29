@@ -2,6 +2,8 @@ import React, { ChangeEvent, ReactNode, useState } from "react";
 import "../AutoComplete/AutoComplete.css";
 import AutoCompleteResult from "./AutoCompleteResult";
 
+export type ItemWithId = { id: string; name: string };
+
 type AutoCompleteProps = {
   items: string[];
   onChangeText: (value: string) => void;
@@ -27,6 +29,12 @@ const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
   };
 
   const handleOnBlur = () => {
+    const timeout = setTimeout(() => setIsResultVisible(false), 300);
+    return () => clearTimeout(timeout);
+  };
+
+  const onSelectItem = (item: ItemWithId) => {
+    setInputValue(item.name);
     setIsResultVisible(false);
   };
 
@@ -36,6 +44,7 @@ const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
         placeholder="Start typing..."
         autoComplete="false"
         type="text"
+        value={inputValue}
         onChange={handleOnChange}
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
@@ -44,6 +53,7 @@ const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
         <AutoCompleteResult
           items={itemsWithIds}
           keyword={inputValue}
+          onSelectItem={onSelectItem}
         ></AutoCompleteResult>
       )}
     </div>

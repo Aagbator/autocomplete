@@ -1,11 +1,17 @@
 import React, { ReactNode } from "react";
+import { ItemWithId } from "./AutoComplete";
 
 type AutoCompleteResultProps = {
-  items: { id: string; name: string }[];
+  items: ItemWithId[];
   keyword: string;
+  onSelectItem: (item: ItemWithId) => void;
 };
 
-const AutoCompleteResult = ({ items, keyword }: AutoCompleteResultProps) => {
+const AutoCompleteResult = ({
+  items,
+  keyword,
+  onSelectItem,
+}: AutoCompleteResultProps) => {
   const highlightKeyword = (text: string, keyword: string): ReactNode => {
     if (!keyword) return [<span key="0">{text}</span>];
 
@@ -56,8 +62,10 @@ const AutoCompleteResult = ({ items, keyword }: AutoCompleteResultProps) => {
       {!hasResults && <span>No results</span>}
       {hasResults && (
         <ul role="listbox">
-          {items.map(({ name, id }, _) => (
-            <li key={id}>{highlightKeyword(name, keyword)}</li>
+          {items.map((item, _) => (
+            <li onClick={() => onSelectItem(item)} key={item.id}>
+              <span>{highlightKeyword(item.name, keyword)}</span>
+            </li>
           ))}
         </ul>
       )}
