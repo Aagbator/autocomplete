@@ -29,7 +29,7 @@ const AutoComplete = ({ items, onChangeText }: AutoCompleteProps) => {
   };
 
   const handleOnBlur = () => {
-    const timeout = setTimeout(() => setIsResultVisible(false), 300);
+    const timeout = setTimeout(() => setIsResultVisible(false), 200);
     return () => clearTimeout(timeout);
   };
 
